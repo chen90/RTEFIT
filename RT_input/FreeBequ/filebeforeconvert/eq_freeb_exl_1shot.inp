@@ -1,0 +1,580 @@
+ !EXL tokamak limiter configuration !for R=0.345 a=0.205 !2017-06-24 
+ 
+ $IN1
+ ISHOT	= 00086		!shot number to analyze
+ ITIME	= 0001		!Time in milliseconds of slice to analyze
+ ITIMEU	= 0
+ QVFIT	=1.0! 0.95		!q(axis)
+ ITEK=0
+ !ICONVR: 
+ !Specify solution mode:
+ !1 = fitting mode for mxiter, nxiter iterations until the specified error is satisfied.
+ !2 = fitting mode until chisq reverse, must satisfy minimum error errmin and minimum number of iterations, as well as a minimum chisq (default).
+ !3 = equilibrium mode.
+ !- = Green's table calculations for -ICONVR filaments and write file RPFXX.DAT for use with MFIT. 
+ ICONVR =3 !b2! 3
+ PLASMA	= 5000.0 !100.e3  	! plasma current Ip(A)
+ CUTIP= 2000.0
+
+ BETAP0 = 0.5 !0.05 !0.8 !1.0 !1.2 ! 0.3 ! 
+
+ EXPMP2	= 63*0.0	!magnetic probe signals(T)
+ COILS	= 41*0.0	!flux loop signals(v.s/rad)
+ BTOR	= 0.0018    	!toroidal field(T)	= 0.0622*It(kA) (T)   !-----2011.06.26--------
+ FWTSI	= 41*0.0	!flux loop in fitting weight 
+ FWTCUR	=  1.0    !1.2 !2010.10.18		!fitting weight for plasma current
+ !LIMITR	= -19  	!number of points for limiter, if negative read from the file
+  LIMITR = 6
+  XLIM = 0.17 0.17 1.525 1.525 0.17 0.17
+  YLIM = 0.000 1.245 1.245 -1.245 -1.245 0.000
+ 
+ FWTMP2	= 63*0.0	!fitting weights for magnetic probe signals
+ !ICURRT: 
+ !"(Integer flag) Current". Which current profile parametrization to use:
+ !1 = not implemented.
+ !2 = linear polynomials for P' and FF' or spline(default).
+ !3 = not implemented.
+ !4 = GAQ type current profile.
+ !5 = same as 2 but include toroidal rotation. 
+ ICURRT =2 !2
+ qenp = 0.0 !0.95
+ qemp = 0.0
+ ENP =1 !1.0! 0.2  !  0.75
+ EMP =1.0!1.5 !0.5
+ !KFFCUR: 
+ !Number of coefficients in polynomial representation of FF'. 
+ !Ignored when using spline representation. Default = 1 
+ KFFCUR	= 2
+ 
+ !KPPCUR: 
+ !Number of coefficients in polynomial representation of P'. 
+ !Ignored when using spline representation. Default = 3 
+ KPPCUR	= 2
+ 
+ !FWTQA: 
+ !"Fit Weight q-on-axis". Flag to add axial q constraint, q on axis = QVFIT, 
+ !to other constraints on current profile:
+ !1 = include constraint
+ !0 = don't include constraint (default) 
+ FWTQA	=.0
+ kwripre=.0
+ 
+ !IERCHK: 
+ !"(Integer flag) Error Check".
+ !>0 : check for MHD fitting errors (Default=1)
+ !<0 : don't check for MHD fitting errors 
+ IERCHK	= 1
+ 
+ !FWTBP: 
+ !Fitting weight to make FF' and p' proportional:
+ !1 = similar P' and FF' profiles
+ !0 = no such constraint (default)
+ !Do not set FWTBP=1 if KPPCUR is not equal to KFFCUR. 
+ FWTBP	=1.0
+ 
+ SERROR	= 3.0E-02
+ NEXTRA	= 2
+ SCRAPE	= 9.9999998E-03
+ ITRACE	= 1
+ ITEK	= 5
+ XLTYPE	= .0
+! RCENTR	=0.6 ! 1.65		!R of vacuum toroidal field in meters
+! rzero=0.6
+ aelip=0.5
+ eelip=1.9
+ relip=0.6
+ BITIP	= 1		!Plasma current physical unit equivalent to 1 digitizer count
+ PSIBIT	= 4*1.0		!flux loops, physical units corresponding to 1 digitizer count
+ BITMPI	= 36*1.0	!Magnetic probes physical unit equivalent to 1 digitizer count
+ DENR	= 1615506020761600.
+ 			!Radial line density
+ 			
+ DENV	= 2138909861478400. 2650137637683200. -5.176756294123520E+16
+ 			!Vertical line density
+ 			
+ SIREF	= 4.869150742888451E-02
+ !Poloidal flux at reference flux loop NSLREF in volt-sec/rad 
+		
+ FWTFC	= 6*1.0  !14*1.0 !7*1.1 !1*5.0,4*1.0,1*5.0		!Fit Weight F-coils
+ 
+ !BRSP: Current arrays; first 10 (NFCOIL) elements are F-coil currents in Amp-turns(?). 
+ !      BRSP not equal 0 for fixed F-coil currents. 
+ !      BRSP(NFCOIL+1) to BRSP(NFCOIL+KPPCUR) coefficients for P'. 
+ !      BRSP(NFCOIL+KPPCUR+1) to BRSP(NFCOIL+KPPCUR+KFFCUR) coefficients for FF
+
+ !******************* Currents in PF coils ******************************************
+  BRSP	= 
+   0  0  0  0  -75  -75
+    
+!xp1 = 0.131425125E+03, yp1 = 0.127606071E+03
+
+!-------------------------------Limiter---------------------------------------------
+ BITFC	=6*1.0  !14*1.0! 7*1.0	!F-coil current physical unit equivalent to 1 digitizer count
+ 
+ !IECURR: "(Integer flag) E-coil current". 
+ !	  1 = include E coil currents in calculations (default).
+ !    2 = fit E-coil currents
+ IECURR	= 2   ! 1  !2014.08.29
+ 
+ IPLIM	= 0
+!********************* Current in CS *******************************************
+ ECURRT	= 0.0e3   	!E coil section currents in Amps
+ KINPUT = 1   
+        
+!------------------------------------------------------------------------------------
+ IFITVS	= 0		!0 = ignore vessel segment currents 
+ VLOOP	= 1.57774472236633
+ DFLUX	= -19.3129978179932	!Measured diamagnetic fluxes in mv-s
+ 
+ !IFCURR: "(Integer flag) Fcoil Currents". Only used in free boundary equilibrium calculations.
+ !        1 = fixed F coil currents.
+ !        0 = variable F-coil currents (Default)
+ !        Set = 0 in fitting and fixed boundary equilibrium solutions. 
+ IFCURR	=1.0
+ 
+ IAVEM	= 5
+ 
+ !ICPROF: 
+ !Specific choice of current profile:
+ !0 = current profile is not specified by this variable (default)
+ !1 = no edge current density allowed
+ !2 = free edge current density
+ !3 = weak edge current density constraint
+ !This sets some or all of the variables KFFCUR, KPPCUR, FCURBD, PCURBD, FWTBP, FWTQA, QVFIT, KCALPA, CALPA, XALPA, KCGAMA, CGAMA, and XGAMA to predefined values.
+ !NOTE that if these variables are seperately specified in the namelist input, the values set by the ICPROF variable will override them. 
+ ICPROF	= 0
+ 
+ CURRN1	= 0.0		!N1 coil current
+ !N1COIL: 
+ !Compensation for magnetic probe pickup from N1 coil:
+ !2 = compensation for n1 coil.
+ !0 = no compensation (default). 
+ N1COIL	= 0
+ 
+ PNBEAM	= 3928857.177734375
+ !ERROR: 
+ !Specifies when EFIT should stop iterating to solution. 
+ !If chi-squared decreases monotonically, then iterations stop 
+ !when the relative error (maximum flux difference between successive 
+ !iterations) < ERROR. Default = 10-3. 
+ !----------------------------------------------------------------------------------------------
+ ERROR= 5.0e-4 !112.10e-5 !2.0e-3 !0.15e-2 ! 7E-4 ! 4.1e-3 !   	3.8E-03
+ 
+ !-------------------------------------------
+ !ERRMIN: 
+ !"Error Min". Minimum convergence error before exit for ICONVR=2 option. 
+ !If chi-squared on any iteration is larger than on previous iteration, 
+ !then if relative error (maximum flux difference between successive iterations)
+ ! < ERRMIN and chi-squared < (how much?), iterations stop. Default=0.01. 
+ ERRMIN	= 3.0E-03
+ 
+ !MXITER: 
+ !Maximum number of outer fitting iterations:
+ !Set to 1 for equilibrium solutions. Set negative for iteration history output 
+ !to terminal during EFIT execution. Default = 25 
+ MXITER	=1!-100! 1     !-25
+ NXITER =-100  ! -125    !Number of inner equilibrium iterations. Set to 1 for fitting.
+ XLTYPE_180	= .0
+ 
+ !ICUTFP: 
+ !2 = to allow force-free current to flow in scrape-off layer (default).
+ !0 = ??? See also ALPHAFP. 
+ ICUTFP	= 0
+ 
+ KEQDSK	= 1
+ !IBTCOMP: 
+ !"(Integer flag) BT Compensation". Toroidal field pickup compensation. 
+ !Subtract contributions to poloidal magnetic field probe measurements 
+ !due to pickup from toroidal field coil:
+ !<=0: no compensation
+ !> 0: apply compensation (Default=1)
+ IBTCOMP = 0
+ 
+ !FCURBD: 
+ !"F Current Boundary".
+ !1 = force FF'=0 at boundary.
+ !0 = let FF' have a finite value at boundary
+ !The method by which FF'=0 is forced is to add another parameter 
+ !to the parametrization whose coefficient is the negative sum of 
+ !all other coefficients. (This makes sense for poly parametrization - 
+ !what about other parametrizations?) Default = 1.0 
+ FCURBD	= 1.0
+ 
+ !PCURBD: 
+ !"P Current Boundary".
+ !1 = force P'=0 at boundary (default).
+ !0 = allow finite P' at boundary. The method for forcing P'=0 is the same as for FCURBD. 
+ PCURBD	= 1.0
+ 
+ !KBOUND: 
+ !0 = run bound algorithm? (Default)
+ !otherwise, don't? 
+ KBOUND	= 0
+ 
+ !ALPHAFP: 
+ !Describes the width of the scrapeoff layer in which the halo currents flow. 
+ !(Must set ICUTFP=2?)
+ !0<= ALPHAFP <=1
+ !1 = zero thickness,
+ !0 = current layer extends either to the first separatrix surface surrounding 
+ !the last closed flux surface or, if there is no external separatrix, it can flow
+ !anywhere inside the chamber.
+ !It is assumed that no current flows outside this external separatrix. Default = 0.0 
+ ALPHAFP = 0.0
+ 
+ KSKIPVS = 0	!1 = search for external separatrix for attached current model.
+ VSDAMP	= .0	!Relaxation parameter for scrape-off layer current. (Always set to 0.25.) default=0
+ KFRAME	= 0
+
+ !ZELIP: 
+ !"Z Ellipse". Z of ellipse center in m for current initialization. 
+ !If ZELIP > 10**5 then ZELIP is estimated from probe signals in same manner 
+ !as Zp(?) and EELIP is set to 1.5. Fitting mode only. Default=0.0 
+ ZELIP	= 0.00  !-0.0075 !
+ 
+ !FWTDLC: 
+ !Fitting weight for diamagnetic flux:
+ !0 = do not include measured data in fit (default)
+ !1 = include measured data in fit
+ FWTDLC	= .0
+ 
+ SIGDLC	= .3853375911712646	!Standard deviation of diamagnetic flux measured data in mv-s.
+ 
+ ELOMIN	= .9
+ !KCALPA: 
+ !+ = number of constraints on coefficients alpha for P' 
+ !(only relevant when ICURRT=2) specified through matrix CALPA and vector XALPA. 
+ !For both equilibrium and fitting. Default=0 
+ KCALPA	= 3
+ 
+ !KCGAMA: 
+ !+ = number of constraints on coefficients gamma for FF' 
+ !(only relevant when ICURRT=2), specified through matrix CGAMA and vector XGAMA. 
+ !For both equilibrium and fitting. Default=0 
+ KCGAMA	= 3
+ 
+ !CALPA: 
+ !Constraint matrix for P' when ICURRT=2 and KCALPA>0. 
+ !Defines constraint equations of the form:
+ !CALPA(1,i) alpha(1) + CALPA(2,i) alpha(2) +...+ CALPA(n,i) alpha(n) = XALPA(i)
+ !for i=1 to KCALPA, where n = KPPCUR. Can scale coefficients up or down 
+ !relative to nominal weights of 1 to get stronger or weaker constraint, 
+ !respectively. Default CALPA(1:3,1) = (0.1,0.1,0.1)
+ CALPA = 0.1 0.1 0.1 0.1 0.1 0.1
+ 
+ !CGAMA: 
+ !Constraint matrix for FF' when ICURRT=2 and KCGAMA>0. 
+ !Defines constraint equations of the form:
+ !CGAMA(1,i) gamma(1) + CGAMA(2,i) gamma(2) +...+ CGAMA(n,i) gamma(n) = XGAMA(i) 
+ !for i=1 to KCGAMA, where n = KFFCUR. 
+ CGAMA = 0.1 0.1 0.1 0.1 0.1 0.1
+ 
+ !XALPA: Constraint vector for P' when ICURRT=2 and KCALPA>0. See CALPA.
+ XALPA	= 0.0
+ 
+ !XGAMA: Constraint vector for FF' when ICURRT=2 and KCGAMA>0. See CGAMA.
+ XGAMA	= 0.0
+ 
+ !KZEROJ: 
+ !Constrain FF' and P' by applying constraints specified by variable RZEROJ.
+ !>0 = number of constraints to apply.
+ !0 = don't apply constraints (default)
+ KZEROJ	= 0
+ 
+ !RZEROJ: 
+ !Vector of radii at which to apply constraints. For each element in vector and 
+ !corresponding elements in SIZEROJ, VZEROJ, if:
+ !RZEROJ>0 : Set Jt=0 at coordinate (RZEROJ,SIZEROJ).
+ !RZEROJ=0 : Set flux surface average current equal to VZEROJ at surface specified 
+ !by normalized flux SIZEROJ.
+ !RZEROJ<0 : Set Jt=0 at the separatrix.
+ !Constraints are applied only if KZEROJ>0. Default RZEROJ(1)=0.0. 
+ !If KZEROJ=1, may specify SIZEROJ(1) with PSIWANT. 
+ !If KZEROJ=1 and SIZEROJ(1)<0, then SIZEROJ(1) is set equal to PSIWANT. 
+ RZEROJ	= .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0
+ .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0
+ 
+ !IAVEUS: 
+ !"IAverage usec". Changes units on averaging times (IAVED, IAVEM, IAVEV) 
+ !to microseconds:
+ !>0: change units to microseconds
+ !<=0: leave units in milliseconds (Default=0) 
+ IAVEUS	= 0
+ 
+ !RELAX: 
+ !Equilibrium relaxation parameter (0<=RELAX<=1). Affects speed of convergence; 
+ !sometimes helps nonconverging solutions to converge:
+ !0.5 = same as backaveraging (BACKAVERAGE = .true.)
+ !1.0 = no relaxation (default).
+ RELAX	= .5
+ 
+ !FWTEC: 
+ !"Fit Weight E-coils". Length 24 vector, each entry of which is a fitting weight 
+ !for E-coil currents. Ignored unless IECURR=2?
+ !0 = do not include measured data in fit (default= all 0.0's)
+ !1 = include measured data in fit
+ FWTEC	= 1*.0
+ 
+ !BITEC : 
+ !"Bit E-coils". E-coil current physical unit equivalent to 1 digitizer count. 
+ !(E-coil bit noises?) Array of nesum elements. Obtained from data and written into 
+ !K-file. Ignored unless IECURR=2? 
+ BITEC	= 1*1.0
+ 
+  !KPRFIT: 
+ !Turn on kinetic fitting:
+ !0 = no kinetic fit?? (default).
+ !1 = fit input pressure profile (total including both thermal and beam in flux space.)
+ !2 = kinetic fitting inputing raw temperature, density, and beam profiles in real space.
+ !3 = include rotation.
+ !Must set KPRFIT=3, ICURRT=5, if no pressure data NPRESS=0. (What does this mean?) 
+ KPRFIT =0 !Turn on kinetic fitting. This flag doesn't work? 
+ KPRESSB = 0
+ PRESSBI = 0
+ KBETAPR=1 !in this new version of efit has such flag
+ !PRBDRY=0.025
+
+ !NPRESS: 
+ !"Number Pressure". Number of valid points in PRESSR:
+ !+ = number of input pressure data points.
+ !- = read in (NPRESS?) from EDAT file.
+ !0 = for rotational pressure only. 
+ NPRESS =           51,
+ RPRESS =
+   -0.0000,   -0.0200,   -0.0400,   -0.0600,   -0.0800,   -0.1000,   -0.1200,   -0.1400,   -0.1600,   -0.1800,   -0.2000,   -0.2200,   -0.2400,   -0.2600,   -0.2800,   -0.3000,   -0.3200,   -0.3400,   -0.3600,   -0.3800,   -0.4000,   -0.4200,   -0.4400,   -0.4600,   -0.4800,   -0.5000,   -0.5200,   -0.5400,   -0.5600,   -0.5800,   -0.6000,   -0.6200,   -0.6400,   -0.6600,   -0.6800,   -0.7000,   -0.7200,   -0.7400,   -0.7600,   -0.7800,   -0.8000,   -0.8200,   -0.8400,   -0.8600,   -0.8800,   -0.9000,   -0.9200,   -0.9400,   -0.9600,   -0.9800,   -1.0000,
+
+PRESSR =
+ 1513.4438, 1454.6734, 1396.9740, 1340.3545, 1284.8234, 1230.3890, 1177.0592, 1124.8420, 1073.7447, 1023.7746,  974.9388,  927.2439,  880.6963,  835.3025,  791.0681,  747.9991,  706.1007,  665.3782,  625.8365,  587.4803,  550.3139,  514.3415,  479.5669,  445.9938,  413.6256,  382.4653,  352.5158,  323.7796,  296.2592,  269.9565,  244.8734,  221.0114,  198.3718,  176.9556,  156.7637,  137.7964,  120.0542,  103.5369,   88.2442,   74.1758,   61.3307,   49.7080,   39.3063,   30.1241,   22.1596,   15.4106,    9.8749,    5.5498,    2.4325,    2.4325,   2.4325,
+
+SIGPRE =
+  302.6888,  290.9347,  279.3948,  268.0709,  256.9647,  246.0778,  235.4118,  224.9684,  214.7489,  204.7549,  194.9878,  185.4488,  176.1393,  167.0605,  158.2136,  149.5998,  141.2201,  133.0756,  125.1673,  117.4961,  110.0628,  102.8683,   95.9134,   89.1988,   82.7251,   76.4931,   70.5032,   64.7559,   59.2518,   53.9913,   48.9747,   44.2023,   39.6744,   35.3911,   31.3527,   27.5593,   24.0108,   20.7074,   17.6488,   14.8352,   12.2661,    9.9416,    7.8613,    6.0248,    4.4319,    3.0821,    1.9750,    1.1100,    0.4865,    0.4865,    0.4865,
+
+fwtpre = 51*1.0
+
+ !KPPFNC: 
+ !Choice of basis function for P'.
+ !0 = polynomial representation P'(psi)=alpha0+alpha1 psi+...+alphan psim.
+ !1 = ??
+ !2 = ??
+ !3 = ??
+ !4 = ??
+ !5 = ??
+ !6 = spline respresentation. 
+ KPPFNC	= 0
+ 
+ KPPKNT	= 2
+ PPKNT	= 0.0,1.0
+ PPTENS	= 5.0
+ KFFFNC	= 0
+ KFFKNT	= 2
+ FFKNT	= 0.0, 1.0
+ FFTENS	= 5.0
+ KWWFNC	= 0
+ KWWKNT	= 0
+ WWKNT	= .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0
+ .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0
+ WWTENS	= .0
+ RBDRY=0
+ ZBDRY=0.
+NBDRY=0
+sigrbd=0
+sigzbd=90
+FWTBDRY=0
+!errbry=1.0E-5
+
+  CFCOIL = -10.0  !more negative implies smoother             
+  FCZERO = 1.0 1.0 1.0 1.0 1.0 1.0
+  FCSUM =  1.0 1.0 1.0 1.0 1.0 1.0
+  IFREF = 4 !sum of F-coil currents zero set by array FCSUM(2)                   
+!
+ PPBDRY	= .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0
+ .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0
+ KPPBDRY	= 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0
+ PP2BDRY	= .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0
+ .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0
+ KPP2BDRY	= 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0
+ FFBDRY	= .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0
+ .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0
+ KFFBDRY	= 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0
+ FF2BDRY	= .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0
+ .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0
+ KFF2BDRY	= 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0
+ WWBDRY	= .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0
+ .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0
+ KWWBDRY	= 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0
+ WW2BDRY	= .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0
+ .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0
+ KWW2BDRY	= 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0
+ KTEAR	= 0
+ IOUT	= 1
+ IXRAY	= 0
+ $END
+ $INWANT
+ !PSIWANT: 
+ !Normalized flux value of surface where J constraint is desired. 
+ !See KZEROJ, RZEROJ, VZEROJ. Default = 1.0 
+ PSIWANT	= .99
+ 
+ !VZEROJ: 
+ !Desired value of normalized J (with respect to I/Area) at flux surface PSIWANT. 
+ !Must have KZEROJ = 1 and RZEROJ=0.0. Default=0.0 
+ VZEROJ	= .1 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0
+ .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0
+ 
+ !NCCOIL : switch to turn on compensation of magnetic probe signals 
+ !for contributions due to C coil currents.
+ !1 = compensation on 
+ !0 = compensation off (default) 
+ NCCOIL	= 0
+ 
+ CURRC79 = .0	!Current in 79 degree C coil in Amps. Default = 0.0 
+ CURRC139 = .0	!Current in 139 degree C coil in Amps. Default = 0.0 
+ REXPAN	= 1.0E-02
+ ZNOSE	= -1.276
+ 
+ !SIZEROJ : 
+ !Vector of normalized flux values to be used when defining 
+ !constraints on Jt. See RZEROJ . Default SIZEROJ(1) = -1.0 
+ SIZEROJ	= -1.0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0
+ .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0
+ 
+ !FITDELZ : 
+ !Set FITDELZ=.T. to turn on vertical shifting of flux 
+ !surfaces during fitting. default = .false. 
+ FITDELZ	= F
+ $END
+ $INS
+ TGAMMA	= 5.008724704384804E-02 3.701434656977654E-02
+ 2.696763537824154E-02 1.221525762230158E-02 4.651225637644529E-03
+ -3.923980053514242E-03 -1.755264028906822E-02 -4.735158011317253E-02
+ -7.729512453079224E-02 -9.443678706884384E-02 -.115540474653244
+ -.14507183432579 -.154768764972687 -.178610578179359 -.181065186858177
+ -.18734835088253 9.549745917320251E-02 .1040476635098457
+ .1152356043457985 .1223042160272598 .1237781345844269
+ .1240383833646774 .1251045912504196 .118459515273571 .1108264252543449
+ -2.735903114080429E-02 -7.697782479226589E-03 3.801621496677399E-03
+ 2.373827621340752E-02 4.213621094822884E-02 6.144769862294197E-02
+ 7.479028403759003E-02 8.628041297197342E-02 9.245785325765610E-02
+ 8.994413912296295E-02
+ SGAMMA	= 6.416559219360352E-03 6.136859301477671E-03
+ 6.150458473712206E-03 6.134814582765102E-03 6.189026869833469E-03
+ 6.167244631797075E-03 6.130782887339592E-03 6.126184947788715E-03
+ 6.158874370157719E-03 6.133299786597490E-03 6.150786764919758E-03
+ 6.147354841232300E-03 6.210931111127138E-03 6.123699247837067E-03
+ 6.155860610306263E-03 6.401264108717442E-03 6.177330389618874E-03
+ 6.138858851045370E-03 6.154194939881563E-03 6.134638097137213E-03
+ 6.141435354948044E-03 6.181846372783184E-03 6.143748760223389E-03
+ 6.203783210366964E-03 6.220066454261541E-03 6.139012519270182E-03
+ 6.134844850748777E-03 6.121919024735689E-03 6.128262262791395E-03
+ 6.137424614280462E-03 6.112568080425262E-03 6.170747336000204E-03
+ 6.140210200101137E-03 6.138646043837070E-03 6.149384658783674E-03
+! FWTGAM	= .7 .7 .7 .7 .7 .7 .7 .7 .7 .7 .0 .0 .0 .0 .0 .0 .7 .7 .7 .7 !hhh
+! .7 .7 .7 .7 .0 .7 .7 .7 .7 .7 .7 .7 .7 .7 .7
+ RRRGAM	= 1.52499997615814 1.5789999961853 1.62999999523163
+ 1.68299996852875 1.73399996757507 1.7849999666214 1.83599996566773
+ 1.88800001144409 1.94000005722046 1.99100005626679 2.04200005531311
+ 2.08999991416931 2.1470000743866 2.19400000572205 2.26399993896484 .0
+ 1.99399995803833 2.04299998283386 2.08800005912781 2.13000011444092
+ 2.17199993133545 2.20900011062622 2.24799990653992 2.26600003242493
+ 2.28600001335144 1.66199994087219 1.71099996566773 1.7610000371933
+ 1.81099998950958 1.86000001430512 1.90900003910065 1.95700001716614
+ 2.00500011444092 2.05200004577637 2.1029999256134
+ ZZZGAM	= -2.099999971687794E-02 -1.799999922513962E-02
+ -1.600000075995922E-02 -1.099999994039536E-02 -9.999999776482582E-03
+ -8.000000379979610E-03 -6.000000052154064E-03 -3.000000026077032E-03
+ -1.000000047497451E-03 .0 7.000000216066837E-03
+ 1.200000010430813E-02 1.400000043213367E-02 1.700000092387199E-02
+ 1.899999938905239E-02 20.06999969482422 2.000000094994903E-03
+ 2.000000094994903E-03 2.000000094994903E-03 1.000000047497451E-03 .0
+ .0 .0 .0 .0 -1.600000075995922E-02 -1.400000043213367E-02
+ -1.200000010430813E-02 -9.999999776482582E-03 -8.000000379979610E-03
+ -7.000000216066837E-03 -4.000000189989805E-03 -3.000000026077032E-03
+ -1.000000047497451E-03 .0
+ AA1GAM	= -.623399972915649 -.645399987697601 -.664200007915497
+ -.682099997997284 -.697700023651123 -.712199985980988
+ -.725600004196167 -.738200008869171 -.749899983406067
+ -.760599970817566 -.770600020885468 -.779399991035461 -.78930002450943
+ -.796899974346161 -.807399988174439 .0 .7031000256538391
+ .6743000149726868 .6449999809265137 .6151000261306763
+ .5825999975204468 .5515999794006348 .5164999961853027
+ .4993999898433685 .4797999858856201 .8551999926567078
+ .8346999883651733 .8101999759674072 .781000018119812 .7470999956130981
+ .7067999839782715 .660099983215332 .6047999858856201 .5414999723434448
+ .4614000022411346
+ AA2GAM	= .6791999936103821 .7052000164985657 .7267000079154968
+ .746399998664856 .7633000016212463 .7785000205039978 .7921000123023987
+ .8047000169754028 .816100001335144 .8263000249862671 .8356000185012817
+ .8435999751091003 .8525000214576721 .8590999841690063
+ .8683000206947327 .0 .8278999924659729 .8367999792098999
+ .8443999886512756 .8510000109672546 .857200026512146 .8622999787330627
+ .8673999905586243 .8695999979972839 .871999979019165 .739300012588501
+ .7562999725341797 .7718999981880188 .7860000133514404
+ .7983999848365784 .8097000122070312 .8199999928474426
+ .8292999863624573 .8377000093460083 .8460999727249146
+ AA3GAM	= .7319999933242798 .7069000005722046 .6848000288009644
+ .6632000207901001 .6437000036239624 .6252999901771545
+ .6079999804496765 .5911999940872192 .5753999948501587 .560699999332428
+ .5465999841690063 .5339999794960022 .5199000239372253
+ .5087000131607056 .4930000007152557 .0 .5605000257492065
+ .546999990940094 .5351999998092651 .5246999859809875 .5145000219345093
+ .5059000253677368 .4970999956130981 .4932000041007996
+ .4889000058174133 .6718999743461609 .6527000069618225
+ .6341000199317932 .616599977016449 .6003999710083008 .5849000215530396
+ .5705999732017517 .5569000244140625 .5442000031471252 .531000018119812
+ AA4GAM	= -4.210000112652779E-02 -4.120000079274178E-02
+ -4.019999876618385E-02 -4.010000079870224E-02 -3.880000114440918E-02
+ -3.779999911785126E-02 -3.689999878406525E-02 -3.629999980330467E-02
+ -3.550000116229057E-02 -3.440000116825104E-02 -3.489999845623970E-02
+ -3.489999845623970E-02 -3.400000184774399E-02 -3.359999880194664E-02
+ -3.249999880790710E-02 .0 1.520000025629997E-02
+ 1.640000008046627E-02 1.750000007450581E-02 1.789999939501286E-02
+ 1.810000091791153E-02 1.909999921917915E-02 2.009999938309193E-02
+ 2.060000039637089E-02 2.109999954700470E-02 2.280000038444996E-02
+ 2.449999935925007E-02 2.630000002682209E-02 2.830000035464764E-02
+ 3.020000085234642E-02 3.319999948143959E-02 3.400000184774399E-02
+ 3.689999878406525E-02 3.819999843835831E-02 4.089999943971634E-02
+ AA5GAM	= -3.570000046693167E-07 -3.600000013648241E-07
+ -3.609999907894235E-07 -3.609999907894235E-07 -3.600000013648241E-07
+ -3.590000119402248E-07 -3.570000046693167E-07 -3.540000079738093E-07
+ -3.510000112783018E-07 -3.479999861610850E-07 -3.449999894655775E-07
+ -3.419999927700701E-07 -3.380000066499633E-07 -3.339999921081471E-07
+ -3.289999881417316E-07 .0 3.549999973984086E-07
+ 3.570000046693167E-07 3.579999940939160E-07 3.590000119402248E-07
+ 3.600000013648241E-07 3.609999907894235E-07 3.609999907894235E-07
+ 3.609999907894235E-07 3.609999907894235E-07 6.919999862020632E-08
+ 4.640000028643954E-08 2.220000006047940E-08 -3.340000054308234E-09
+ -2.970000068103218E-08 -5.760000121313169E-08 -8.650000182797157E-08
+ -1.169999990224824E-07 -1.479999980347202E-07 -1.829999973779195E-07
+ AA6GAM	= -3.609999907894235E-07 -3.609999907894235E-07
+ -3.609999907894235E-07 -3.609999907894235E-07 -3.609999907894235E-07
+ -3.609999907894235E-07 -3.609999907894235E-07 -3.609999907894235E-07
+ -3.609999907894235E-07 -3.609999907894235E-07 -3.609999907894235E-07
+ -3.609999907894235E-07 -3.609999907894235E-07 -3.609999907894235E-07
+ -3.609999907894235E-07 .0 -3.609999907894235E-07
+ -3.609999907894235E-07 -3.609999907894235E-07 -3.609999907894235E-07
+ -3.609999907894235E-07 -3.609999907894235E-07 -3.609999907894235E-07
+ -3.609999907894235E-07 -3.609999907894235E-07 -3.609999907894235E-07
+ -3.609999907894235E-07 -3.609999907894235E-07 -3.609999907894235E-07
+ -3.609999907894235E-07 -3.609999907894235E-07 -3.609999907894235E-07
+ -3.609999907894235E-07 -3.609999907894235E-07 -3.609999907894235E-07
+ MSEBKP	= 0
+ $END
+ $INER
+ KEECUR	= 2
+ ECURBD	= .0
+ KEEFNC	= 0
+ EETENS	= 5.0
+ KEEBDRY	= 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ KEE2BDRY	= 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ EEBDRY	= .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0
+ EE2BDRY	= .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0
+ EEKNT	= .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0
+ KEEKNT	= 0
+ $END
+                                            MSE
